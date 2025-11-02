@@ -13,47 +13,71 @@ import logging
 
 logger = logging.getLogger("ai")
 
-BASE_URL = config("BASE_URL", default=None)
 def get_agent_info(request):
+
+    BASE_URL = config("BASE_URL", default=None)
+
     agent_info = {
-        "name": "AI CodeHelper",
-        "description": "Provides coding assistance for Python, Django, and JavaScript.",
-        "url": f"{BASE_URL}/ai/work" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/ai/work",
+
+        "name": "CodeHelperAgent", 
+
+        "description": "An AI agent to help with coding questions in Python, Django, and JavaScript.", 
+
+        "url": BASE_URL.rstrip('/') if BASE_URL else "https://aiagentcodehelper-production.up.railway.app", 
+
         "provider": {
-            "organization": "HNG",
-            "url":  "https://hng.tech/"
+
+            "organization": "HNG Internship", 
+
+            "url": "https://hng.tech/" 
         },
-        "version": "1.0.0",
-        "documentationUrl": f"{BASE_URL}/docs" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/docs",
+
+        "version": "1.0.0", 
+  
+        "documentationUrl": f"{BASE_URL}/docs" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/docs", 
+ 
         "capabilities": {
-            "streaming": False,
-            "pushNotifications": False,
-            "stateTransitionHistory": False
+            "streaming": False, 
+            "pushNotifications": False, 
+            "stateTransitionHistory": False 
         },
-        "defaultInputModes": ["text"],
-        "defaultOutputModes": ["text"],
+ 
+        "defaultInputModes": ["text/plain"], 
+        "defaultOutputModes": ["text/plain", "application/json"], 
+
         "skills": [
             {
-                "id": "coding_assistant",
-                "name": "Coding Assistant",
-                "description": "Answer coding questions and provide examples in Python, Django, and JavaScript.",
-                "inputModes": ["text"],
-                "outputModes": ["text"],
-                "examples": [
+                "id": "coding_assistant", 
+
+                "name": "Code Explanation & Snippets", 
+
+                "description": "Explains programming concepts and provides code snippets for Python, Django, and JavaScript.", 
+
+                "inputModes": ["text/plain"], 
+                "outputModes": ["text/plain"], 
+                "examples": [ 
                     {
-                        "input": "How do I loop through a list in Python?",
-                        "output": "You can loop through a list using a for loop, e.g., `for item in my_list: print(item)`"
+ 
+                        "input": { "parts": [{ "type": "text", "text": "How do I loop through a list in Python?" }] },
+                        "output": { "parts": [{ "type": "text", "text": "You can loop through a list using a `for` loop:\n```python\nmy_list = ['item1', 'item2', 'item3']\nfor item in my_list:\n    print(item)\n```\nThis iterates over each element (`item`) in `my_list`." }] }
+
                     },
                     {
-                        "input": "How do I create a Django model?",
-                        "output": "Define a class that inherits from `models.Model` and add your fields, e.g., `class MyModel(models.Model): name = models.CharField(max_length=100)`"
+                        
+                        "input": { "parts": [{ "type": "text", "text": "How do I create a Django model?" }] },
+                        "output": { "parts": [{ "type": "text", "text": "In Django, you create a model by subclassing `models.Model` in your `models.py`:\n```python\nfrom django.db import models\nclass MyModel(models.Model):\n    name = models.CharField(max_length=100)\n    description = models.TextField(blank=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    def __str__(self):\n        return self.name\n```\nRemember to create and run migrations after defining your model:\n```bash\npython manage.py makemigrations\npython manage.py migrate\n```" }] }
+                        
                     }
                 ]
             }
         ]
     }
-    
+
+
+    logger.info("Serving Agent Card at /.well-known/agent.json")
     return JsonResponse(agent_info, status=status.HTTP_200_OK, safe=True)
+
+
 
 
 class GetResponse(APIView):
