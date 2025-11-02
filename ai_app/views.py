@@ -23,7 +23,7 @@ def get_agent_info(request):
 
         "description": "An AI agent to help with coding questions in Python, Django, and JavaScript.", 
 
-        "url": BASE_URL.rstrip('/') if BASE_URL else "https://aiagentcodehelper-production.up.railway.app", 
+        "url": BASE_URL.rstrip('/') if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/ai/work", 
 
         "provider": {
 
@@ -180,7 +180,7 @@ class GetResponse(APIView):
         
         if parts and isinstance(parts, list) and len(parts) > 0:
             parts_data = parts[0]
-            first_data =  parts_data.get("type", None)
+            first_data =  parts_data.get("type") or parts_data.get("kind")
             if first_data == "text" and len(parts_data) > 0:
                 user_text = parts_data.get("text", None)
                 method = telex_request_data.get("method")
