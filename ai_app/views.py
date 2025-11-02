@@ -14,18 +14,47 @@ import logging
 logger = logging.getLogger("ai")
 
 BASE_URL = config("BASE_URL", default=None)
-  
 def get_agent_info(request):
     agent_info = {
-        "name" : "ai_codehelper",
-        "description" : "An AI agent to help with coding questions in Python, Django, and JavaScript.",
-        "version" : "1.0.0",
-        "methods" : "message/send",
-        "baseurl" : BASE_URL
-        
+        "name": "AI CodeHelper",
+        "description": "Provides coding assistance for Python, Django, and JavaScript.",
+        "url": f"{BASE_URL}/ai/work" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/ai/work",
+        "provider": {
+            "organization": "HNG",
+            "url":  "https://hng.tech/"
+        },
+        "version": "1.0.0",
+        "documentationUrl": f"{BASE_URL}/docs" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/docs",
+        "capabilities": {
+            "streaming": False,
+            "pushNotifications": False,
+            "stateTransitionHistory": False
+        },
+        "defaultInputModes": ["text"],
+        "defaultOutputModes": ["text"],
+        "skills": [
+            {
+                "id": "coding_assistant",
+                "name": "Coding Assistant",
+                "description": "Answer coding questions and provide examples in Python, Django, and JavaScript.",
+                "inputModes": ["text"],
+                "outputModes": ["text"],
+                "examples": [
+                    {
+                        "input": "How do I loop through a list in Python?",
+                        "output": "You can loop through a list using a for loop, e.g., `for item in my_list: print(item)`"
+                    },
+                    {
+                        "input": "How do I create a Django model?",
+                        "output": "Define a class that inherits from `models.Model` and add your fields, e.g., `class MyModel(models.Model): name = models.CharField(max_length=100)`"
+                    }
+                ]
+            }
+        ]
     }
     
     return JsonResponse(agent_info, status=status.HTTP_200_OK, safe=True)
+
 
 class GetResponse(APIView):
     def post(self, request, *args, **kwargs):
