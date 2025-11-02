@@ -130,40 +130,28 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+LOG_DIR = os.path.join(BASE_DIR, "logs")
+os.makedirs(LOG_DIR, exist_ok=True)
+
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": False,  # keep default Django loggers
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(LOG_DIR, "ai_agent.log"),
+            "formatter": "verbose",
+        },
+    },
     "formatters": {
         "verbose": {
-            "format": "[{levelname}] {asctime} {name} {message}",
-            "style": "{",
-        },
-        "simple": {
-            "format": "[{levelname}] {message}",
+            "format": "[{levelname}] {asctime} {name}: {message}",
             "style": "{",
         },
     },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs/ai_agent.log"),
-            "formatter": "verbose",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": True,
-        },
-        "ai": {  # this matches 'logger = logging.getLogger("ai")'
-            "handlers": ["console", "file"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
+    "root": {
+        "handlers": ["file"],
+        "level": "INFO",
     },
 }
