@@ -225,7 +225,7 @@ class GetResponse(APIView):
             return self.error_response(jsonrpc, id, code, message)            
 
         kind = "message"
-        message_id = hashlib.sha256(str(id).encode()).hexdigest()
+        message_id = telex_request_data.get("message_id")
         
         
         logger.info("Sending code assistance response back to Telex IM.")
