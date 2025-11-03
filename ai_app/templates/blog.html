@@ -570,16 +570,7 @@ pip install -r requirements.txt</pre>
                 
                 <h3>Quick curl test (valid):</h3>
                 <div class="code-block">
-                    <pre>curl -X POST http://127.0.0.1:8000/ai/work/ \
- -H "Content-Type: application/json" \
- -d '{
-   "jsonrpc":"2.0",
-   "method":"message/send",
-   "id":1,
-   "params":{
-     "message":{"parts":[{"type":"text","text":"How do I loop through a list in Python?"}]}
-   }
- }'</pre>
+                    <pre>curl -X POST http://127.0.0.1:8000/ai/work -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"method\":\"message/send\",\"id\":1,\"params\":{\"message\":{\"parts\":[{\"type\":\"text\",\"text\":\"How do I loop through a list in Python?\"}]}}}"</pre>
                 </div>
                 
                 <h3>Test missing params (invalid):</h3>
