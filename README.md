@@ -167,7 +167,7 @@ Returns agent metadata. Example response:
   "description": "An AI agent to help with coding questions in Python, Django, and JavaScript.",
   "version": "1.0.0",
   "methods": ["message/send"],
-  "endpoint": "https://your-domain.com/"
+  "endpoint": "https://your-domain.com/ai/work/"
 }
 ```
 
@@ -304,7 +304,7 @@ Use this in `Ai_Agent.gemini_response` and return a plain string.
 ### Quick curl test (valid):
 
 ```bash
-curl -X POST http://127.0.0.1:8000/ \
+curl -X POST http://127.0.0.1:8000/ai/work/ \
  -H "Content-Type: application/json" \
  -d '{
    "jsonrpc":"2.0",
@@ -319,7 +319,7 @@ curl -X POST http://127.0.0.1:8000/ \
 ### Test missing params (invalid):
 
 ```bash
-curl -X POST http://127.0.0.1:8000/ -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1}'
+curl -X POST http://127.0.0.1:8000/ai/work/ -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1}'
 ```
 
 

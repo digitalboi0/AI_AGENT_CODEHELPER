@@ -611,7 +611,7 @@ pip install -r requirements.txt</pre>
                     <li>
                         <p><strong>Visit agent card URL:</strong></p>
                         <div class="code-block">
-                            <pre>http://127.0.0.1:8000/.well-known/agent.json</pre>
+                            <pre>http://127.0.0.1:8000/ai/.well-known/agent.json</pre>
                         </div>
                     </li>
                 </ol>
@@ -622,7 +622,7 @@ pip install -r requirements.txt</pre>
                 
                 <h3>Quick curl test (valid):</h3>
                 <div class="code-block">
-                    <pre>curl -X POST http://127.0.0.1:8000/ \
+                    <pre>curl -X POST http://127.0.0.1:8000/ai/work/ \
  -H "Content-Type: application/json" \
  -d '{
    "jsonrpc":"2.0",
@@ -636,7 +636,7 @@ pip install -r requirements.txt</pre>
                 
                 <h3>Test missing params (invalid):</h3>
                 <div class="code-block">
-                    <pre>curl -X POST http://127.0.0.1:8000/ -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1}'</pre>
+                    <pre>curl -X POST http://127.0.0.1:8000/ai/work/ -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1}'</pre>
                 </div>
             </section>
             
