@@ -9,9 +9,16 @@ import copy
 from django.http import JsonResponse
 from decouple import config
 import logging
+from django.shortcuts import render
 # Create your views here.
 
 logger = logging.getLogger("ai")
+
+def blog(request):
+    return render(request, "blog.html")
+
+def doc(request):
+    return render(request, "doc.html")
 
 def get_agent_info(request):
 
@@ -34,7 +41,7 @@ def get_agent_info(request):
 
         "version": "1.0.0", 
   
-        "documentationUrl": f"{BASE_URL}/docs" if BASE_URL else "https://aiagentcodehelper-production.up.railway.app/docs", 
+        "documentationUrl": "https://aiagentcodehelper-production.up.railway.app/ai/docs", 
  
         "capabilities": {
             "streaming": False, 

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HNG Telex AI Agent Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="5" fill="rgba(255,255,255,0.2)"/><circle cx="80" cy="40" r="7" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="6" fill="rgba(255,255,255,0.15)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hng-intro {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 8px;
+            border-left: 5px solid #1a73e8;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        section {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #e4edf5;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #0d47a1;
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .code-block {
+            background: #2b2b2b;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid #e4edf5;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+        
+        .diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 8px;
+        }
+        
+        .diagram h3 {
+            margin-bottom: 15px;
+        }
+        
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+        
+        .steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #1a73e8;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: #1a73e8;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .testimonial {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .testimonial .author {
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e4edf5;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Telex AI Agent — Django + Google Gemini</h1>
+            <p class="subtitle">A Django-based Telex Agent that implements the Agent-to-Agent (A2A) JSON-RPC protocol and uses Google Gemini for AI responses</p>
+            <div class="badges">
+                <div class="badge">Made with Django</div>
+                <div class="badge">Powered by Google Gemini</div>
+                <div class="badge">Telex A2A Compatible</div>
+                <div class="badge">License: MIT</div>
+            </div>
+        </header>
+        
+        <div class="hng-intro">
+            <h2>About HNG</h2>
+            <p>HNG is a company with a mission — we work with the very best techies to help them enhance their skills through our HNG internship program and build their network. We also work with clients to find them the best technical talent across the globe.</p>
+            <p>This AI agent was developed as part of the HNG internship program.</p>
+        </div>
+        
+        <div class="content">
+            <section id="overview">
+                <h2>Project Overview</h2>
+                <p>The Telex AI Agent is a Django-based application that serves as an AI-powered coding assistant. It integrates with the Telex IM platform using the Agent-to-Agent (A2A) JSON-RPC protocol and leverages Google Gemini for intelligent responses to coding questions.</p>
+                
+                <div class="card">
+                    <p><strong>Core Functionality:</strong></p>
+                    <ul>
+                        <li>Implements Telex A2A JSON-RPC protocol</li>
+                        <li>Provides coding assistance in Python, Django, and JavaScript</li>
+                        <li>Validates incoming requests and returns structured responses</li>
+                        <li>Integrates with Google Gemini for AI-powered answers</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="a2a-protocol">
+                <h2>Agent-to-Agent (A2A) Protocol</h2>
+                <p>The Telex A2A protocol defines how agents communicate with each other. Your agent must expose two endpoints:</p>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>GET /.well-known/agent.json</h3>
+                        <p>Returns the Agent Card (metadata) so Telex can discover and contact your agent. This endpoint provides information about the agent's capabilities, name, description, and supported methods.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>POST /</h3>
+                        <p>Single unified JSON-RPC endpoint for all A2A calls (e.g., <code>message/send</code>, <code>task/subscribe</code>). Requests have <code>Content-Type: application/json</code>.</p>
+                    </div>
+                </div>
+                
+                <p>The server performs these operations:</p>
+                <ol class="steps">
+                    <li>Validates the JSON-RPC request structure</li>
+                    <li>Routes by <code>method</code> (e.g., <code>message/send</code>)</li>
+                    <li>Uses <code>Ai_Agent.gemini_response(user_text)</code> to generate a reply</li>
+                    <li>Returns a JSON-RPC success or error payload</li>
+                </ol>
+            </section>
+            
+            <section id="project-structure">
+                <h2>Project Structure</h2>
+                <p>The recommended project structure organizes the code into logical modules:</p>
+                
+                <div class="code-block">
+                    <pre>telex_ai_agent/
+├── ai/                        # app: ai/webhook & agent code
+│   ├── views.py               # GetResponse and get_agent_info
+│   ├── ai.py                  # Ai_Agent wrapper for Gemini
+│   
+├── ai_agent/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── .env
+├── manage.py
+├── requirements.txt
+├── Dockerfile
+└── README.md</pre>
+                </div>
+                
+                <p>Each component serves a specific purpose:</p>
+                <ul>
+                    <li><code>ai/views.py</code>: Contains the main API endpoints for handling requests</li>
+                    <li><code>ai/ai.py</code>: Implements the AI agent wrapper for Google Gemini</li>
+                    <li><code>.env</code>: Stores sensitive configuration values</li>
+                </ul>
+            </section>
+            
+            <section id="requirements">
+                <h2>Requirements</h2>
+                <p>The project requires specific Python packages and versions:</p>
+                
+                <div class="card">
+                    <h3>Python Dependencies</h3>
+                    <ul>
+                        <li>Python 3.10+ (3.11 preferred)</li>
+                        <li>Django 4.x</li>
+                        <li>djangorestframework</li>
+                        <li>google-genai (or <code>google</code> genai package)</li>
+                        <li>python-decouple</li>
+                        <li>hashlib (stdlib)</li>
+                    </ul>
+                </div>
+                
+                <div class="code-block">
+                    <pre>Django>=4.2
+djangorestframework
+python-decouple
+google-genai   # or `google` depending on SDK package name
+gunicorn</pre>
+                </div>
+            </section>
+            
+            <section id="configuration">
+                <h2>Configuration (.env)</h2>
+                <p>Configuration is handled through environment variables stored in a <code>.env</code> file:</p>
+                
+                <div class="code-block">
+                    <pre>SECRET_KEY=your_django_secret_key
+DEBUG=True
+BASE_URL=your_project_live_url
+GEMINI_API_KEY=your_google_gemini_api_key</pre>
+                </div>
+                
+                <div class="card">
+                    <p><strong>Important:</strong> Add <code>.env</code> to <code>.gitignore</code>. Do not commit secrets to version control.</p>
+                </div>
+            </section>
+            
+            <section id="endpoints">
+                <h2>API Endpoints</h2>
+                
+                <h3>GET /.well-known/agent.json</h3>
+                <p>Returns agent metadata. Example response:</p>
+                
+                <div class="code-block">
+                    <pre>{
+  "name": "ai_codehelper",
+  "description": "An AI agent to help with coding questions in Python, Django, and JavaScript.",
+  "version": "1.0.0",
+  "methods": ["message/send"],
+  "endpoint": "https://your-domain.com/"
+}</pre>
+                </div>
+                
+                <h3>POST / — JSON-RPC A2A endpoint</h3>
+                <p>Accepts JSON body described by Telex A2A spec. Must use <code>Content-Type: application/json</code>. Routes using <code>method</code> field (e.g., <code>"message/send"</code>).</p>
+            </section>
+            
+            <section id="json-rpc-examples">
+                <h2>JSON-RPC Examples</h2>
+                
+                <h3>Request: message/send</h3>
+                <div class="code-block">
+                    <pre>{
+  "jsonrpc": "2.0",
+  "method": "message/send",
+  "id": 3,
+  "params": {
+    "message": {
+      "role": "user",
+      "parts": [
+        { "type": "text", "text": "ping" }
+      ]
+    }
+  }
+}</pre>
+                </div>
+                
+                <h3>Success Response</h3>
+                <div class="code-block">
+                    <pre>{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "role": "agent",
+    "parts": [
+      { "type": "text", "text": "pong" }
+    ],
+    "kind": "message",
+    "message_id": "fbuvdhb4ke6vq8hbva9qh9ha"
+  }
+}</pre>
+                </div>
+                
+                <h3>Error Response (example)</h3>
+                <div class="code-block">
+                    <pre>{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32600,
+    "message": "Invalid Request"
+  }
+}</pre>
+                </div>
+            </section>
+            
+            <section id="error-codes">
+                <h2>Error Codes</h2>
+                <p>The implementation uses standard JSON-RPC error codes:</p>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>When Returned</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>-32700</td>
+                                <td>Parse error</td>
+                                <td>Invalid JSON (request not parseable)</td>
+                            </tr>
+                            <tr>
+                                <td>-32600</td>
+                                <td>Invalid Request</td>
+                                <td>Missing params / invalid structure</td>
+                            </tr>
+                            <tr>
+                                <td>-32601</td>
+                                <td>Method not found</td>
+                                <td>Unknown method in method field</td>
+                            </tr>
+                            <tr>
+                                <td>-32602</td>
+                                <td>Invalid params</td>
+                                <td>Missing or wrong-typed params (e.g., no text)</td>
+                            </tr>
+                            <tr>
+                                <td>-32603</td>
+                                <td>Internal error</td>
+                                <td>AI/network/runtime error</td>
+                            </tr>
+                            <tr>
+                                <td>-32000</td>
+                                <td>Server/AI init fail</td>
+                                <td>Failure to initialize Ai_Agent (server config)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p>Implementation returns JSON-RPC error payloads with HTTP <code>200</code> for application-level errors, and appropriate HTTP codes (400/500) for parse/transport problems.</p>
+            </section>
+            
+            <section id="implementation-details">
+                <h2>Implementation Details</h2>
+                
+                <h3>GetResponse Class</h3>
+                <p>The <code>GetResponse</code> class handles incoming requests from Telex IM:</p>
+                
+                <div class="code-block">
+                    <pre>class GetResponse(APIView):
+    def post(self, request, *args, **kwargs):
+        body = request.data
+        method = body.get("method")
+        if method == "message/send":
+            params = body.get("params", {})
+            message = params.get("message", {})
+            # find first text part and extract user_text...
+            ai_agent = Ai_Agent()
+            ai_text = ai_agent.gemini_response(user_text)
+            return Response({
+                "jsonrpc": "2.0",
+                "id": body.get("id"),
+                "result": {
+                    "role": "agent",
+                    "parts": [{"type": "text", "text": ai_text}],
+                    "kind": "message",
+                    "message_id": "&lt;hash&gt;"
+                }
+            })
+        else:
+            return Response({
+                "jsonrpc": "2.0",
+                "id": body.get("id"),
+                "error": {"code": -32601, "message": "Method not found"}
+            })</pre>
+                </div>
+                
+                <h3>AI Agent Integration</h3>
+                <p>When extracting text from Gemini responses, use this pattern:</p>
+                
+                <div class="code-block">
+                    <pre>try:
+    text = resp.candidates[0].content.parts[0].text
+except (AttributeError, IndexError) as e:
+    raise RuntimeError(f"Unexpected Gemini response shape: {e}")</pre>
+                </div>
+                
+                <p>Use this in <code>Ai_Agent.gemini_response</code> and return a plain string.</p>
+            </section>
+            
+            <section id="development">
+                <h2>Local Development</h2>
+                <ol class="steps">
+                    <li>
+                        <p><strong>Clone, create venv, activate:</strong></p>
+                        <div class="code-block">
+                            <pre>git clone https://github.com/digitalboi0/AI_AGENT_CODEHELPER.git
+cd ai-agent
+python -m venv venv
+source venv/bin/activate   # macOS/Linux
+venv\Scripts\activate      # Windows
+pip install -r requirements.txt</pre>
+                        </div>
+                    </li>
+                    <li>
+                        <p><strong>Create .env as described above.</strong></p>
+                    </li>
+                    <li>
+                        <p><strong>Run migrations (if you have DB models or want save data):</strong></p>
+                        <div class="code-block">
+                            <pre>python manage.py migrate</pre>
+                        </div>
+                    </li>
+                    <li>
+                        <p><strong>Run dev server:</strong></p>
+                        <div class="code-block">
+                            <pre>python manage.py runserver 0.0.0.0:8000</pre>
+                        </div>
+                    </li>
+                    <li>
+                        <p><strong>Visit agent card URL:</strong></p>
+                        <div class="code-block">
+                            <pre>http://127.0.0.1:8000/.well-known/agent.json</pre>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+            
+            <section id="testing">
+                <h2>Testing</h2>
+                
+                <h3>Quick curl test (valid):</h3>
+                <div class="code-block">
+                    <pre>curl -X POST http://127.0.0.1:8000/ \
+ -H "Content-Type: application/json" \
+ -d '{
+   "jsonrpc":"2.0",
+   "method":"message/send",
+   "id":1,
+   "params":{
+     "message":{"parts":[{"type":"text","text":"How do I loop through a list in Python?"}]}
+   }
+ }'</pre>
+                </div>
+                
+                <h3>Test missing params (invalid):</h3>
+                <div class="code-block">
+                    <pre>curl -X POST http://127.0.0.1:8000/ -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":1}'</pre>
+                </div>
+            </section>
+            
+            <section id="deployment">
+                <h2>Deployment Suggestions</h2>
+                <ul>
+                    <li>Use Render, Railway, Fly.io, or a VPS with Gunicorn + Nginx</li>
+                    <li>Ensure <code>BASE_URL</code> matches public HTTPS URL</li>
+                    <li>Add <code>AGENT_PUBLIC_KEY</code> if Telex signs/encrypts messages (check Telex docs)</li>
+                    <li>Configure an application-level log sink (Sentry / LogDNA) for tracebacks</li>
+                </ul>
+            </section>
+            
+            <section id="troubleshooting">
+                <h2>Troubleshooting & Debugging</h2>
+                
+                <h3>If you get "AI AGENT is unreachable":</h3>
+                <ul>
+                    <li>Check <code>.env</code> <code>GEMINI_API_KEY</code> value and SDK init</li>
+                    <li>Run a quick shell test:
+                        <div class="code-block">
+                            <pre>python manage.py shell
+from ai.ai_agent import Ai_Agent
+a = Ai_Agent()      # see if raises
+print(a.gemini_response("hello"))</pre>
+                        </div>
+                    </li>
+                    <li>Add <code>logger.exception()</code> where exceptions are caught to see tracebacks in server logs</li>
+                </ul>
+                
+                <h3>If gemini_response object shape differs:</h3>
+                <p>Extract the text using the <code>gemini_response.candidates[0].content.parts[0].text</code> path, checking for <code>AttributeError</code> / <code>IndexError</code>.</p>
+            </section>
+            
+            <section id="roadmap">
+                <h2>Roadmap & Improvements</h2>
+                <ul>
+                    <li>Implement additional A2A methods beyond <code>message/send</code></li>
+                    <li>Add support for more programming languages</li>
+                    <li>Implement rate limiting for API calls</li>
+                    <li>Add caching for frequently asked questions</li>
+                    <li>Implement conversation history for context-aware responses</li>
+                    <li>Add support for code execution and testing</li>
+                    <li>Enhance error handling and logging capabilities</li>
+                </ul>
+            </section>
+            
+            <section id="testimonials">
+                <h2>Testimonials from HNG Alumni</h2>
+                
+                <div class="testimonial">
+                    <p>"HNGx has been a transformative experience that propelled my growth as a PHP backend engineer. Working on real-world projects alongside a team of 28 developers using the same stack provided me with invaluable exposure to industry best practices and standard processes."</p>
+                    <p class="author">- Abdulmujeeb, Completed HNG Internship</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"The exposure to real-world projects, collaboration with talented peers, and guidance from industry experts shaped me into a more confident and skilled developer."</p>
+                    <p class="author">- Henry, Completed HNG Network</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"HNG internship is the absolute best for anyone willing to take on some serious challenge in their career path. I came into the internship with so much expectations from all the HNG tales I heard prior to my application, and I must say I wasn't at any point disappointed."</p>
+                    <p class="author">- Chukwuka Ugada, Completed HNG Internship</p>
+                </div>
+            </section>
+            
+            <section id="contributing">
+                <h2>Contributing</h2>
+                <p>Contributions welcome — open an issue or PR. Please follow these steps:</p>
+                <ol class="steps">
+                    <li>Fork the repo</li>
+                    <li>Create a feature branch: <code>git checkout -b feat/my-feature</code></li>
+                    <li>Write tests</li>
+                    <li>Open a pull request</li>
+                </ol>
+                
+                <p>Add a short description of your change and why it helps.</p>
+            </section>
+            
+            <section id="author-license">
+                <h2>Author & License</h2>
+                <p><strong>Author:</strong> Osaretin Festus — AI & Backend Developer</p>
+                <p><strong>License:</strong> This project is released under the <strong>MIT License</strong>. See <code>LICENSE</code> for details.</p>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Created as part of the HNG Internship Program | Powered by Google Gemini</p>
+            <p>A comprehensive guide to building an AI coding assistant with Django and Google Gemini</p>
+        </footer>
+    </div>
+</body>
+</html>
+

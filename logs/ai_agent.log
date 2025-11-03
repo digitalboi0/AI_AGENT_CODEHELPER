@@ -1,0 +1,40 @@
+[INFO] 2025-11-03 23:02:51,265 django.utils.autoreload: Watching for file changes with StatReloader
+[ERROR] 2025-11-03 23:03:12,198 django.security.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+[ERROR] 2025-11-03 23:03:16,029 django.security.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+[ERROR] 2025-11-03 23:03:16,097 django.security.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\osaretin\Documents\ai_agent\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+[INFO] 2025-11-03 23:04:02,691 django.utils.autoreload: C:\Users\osaretin\Documents\ai_agent\ai_agent\settings.py changed, reloading.
+[INFO] 2025-11-03 23:04:04,533 django.utils.autoreload: Watching for file changes with StatReloader
+[WARNING] 2025-11-03 23:04:17,615 django.request: Not Found: /favicon.ico
+[WARNING] 2025-11-03 23:04:17,630 django.request: Not Found: /favicon.ico
+[INFO] 2025-11-03 23:07:00,187 django.utils.autoreload: C:\Users\osaretin\Documents\ai_agent\ai_app\views.py changed, reloading.
+[INFO] 2025-11-03 23:07:01,920 django.utils.autoreload: Watching for file changes with StatReloader
