@@ -129,6 +129,7 @@ class GetResponse(APIView):
         method = telex_request_data.get("method", None)    
         jsonrpc = telex_request_data.get("jsonrpc", None)    
         params = telex_request_data.get("params", None)
+        message_id = telex_request_data.get("message_id", None)
         
 
         logger.debug(f"Extracted RPC data - ID: {id}, Method: {method}, JSONRPC: {jsonrpc}")
@@ -232,7 +233,7 @@ class GetResponse(APIView):
             return self.error_response(jsonrpc, id, code, message)            
 
         kind = "message"
-        message_id = telex_request_data.get("message_id")
+        
         
         
         logger.info("Sending code assistance response back to Telex IM.")

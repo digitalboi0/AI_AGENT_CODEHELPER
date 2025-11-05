@@ -38,3 +38,15 @@ django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000
 [WARNING] 2025-11-03 23:04:17,630 django.request: Not Found: /favicon.ico
 [INFO] 2025-11-03 23:07:00,187 django.utils.autoreload: C:\Users\osaretin\Documents\ai_agent\ai_app\views.py changed, reloading.
 [INFO] 2025-11-03 23:07:01,920 django.utils.autoreload: Watching for file changes with StatReloader
+[WARNING] 2025-11-03 23:14:42,635 django.request: Not Found: /
+[WARNING] 2025-11-03 23:14:57,886 django.request: Not Found: /
+[INFO] 2025-11-03 23:18:46,621 ai: Receiving code assistance request from Telex IM...
+[WARNING] 2025-11-03 23:18:46,622 ai: No params was found in the data
+[INFO] 2025-11-03 23:21:28,343 ai: Receiving code assistance request from Telex IM...
+[WARNING] 2025-11-03 23:21:28,343 ai: No params was found in the data
+[INFO] 2025-11-03 23:24:11,470 ai: Receiving code assistance request from Telex IM...
+[INFO] 2025-11-03 23:24:11,471 ai: Processing user message: 'How do I loop through a list in Python?...'
+[INFO] 2025-11-03 23:24:13,288 google_genai.models: AFC is enabled with max remote calls: 10.
+[INFO] 2025-11-03 23:24:15,338 httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+[INFO] 2025-11-03 23:24:15,349 ai: Received response from Gemini API: 'You can loop through a list in Python using a `for...'
+[INFO] 2025-11-03 23:24:15,349 ai: Sending code assistance response back to Telex IM.
