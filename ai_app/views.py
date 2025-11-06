@@ -129,7 +129,7 @@ class GetResponse(APIView):
         method = telex_request_data.get("method", None)    
         jsonrpc = telex_request_data.get("jsonrpc", None)    
         params = telex_request_data.get("params", None)
-        message_id = telex_request_data.get("message_id", None)
+        message_id = telex_request_data.get("messageId", None)
         
 
         logger.debug(f"Extracted RPC data - ID: {id}, Method: {method}, JSONRPC: {jsonrpc}")
