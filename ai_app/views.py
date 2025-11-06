@@ -20,12 +20,6 @@ import re
 
 logger = logging.getLogger("ai")
 
-EMAIL = config("Email")
-NAME = config("Name")
-STACK = config("Stack")
-
-CAT_URL = config("Api_url")
-REQUEST_TIMEOUT = config("Timeout", cast=int)
 
 def blog(request):
     return render(request, "blog.html")
