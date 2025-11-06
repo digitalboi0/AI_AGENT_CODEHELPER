@@ -129,7 +129,7 @@ class GetResponse(APIView):
         method = telex_request_data.get("method", None)    
         jsonrpc = telex_request_data.get("jsonrpc", None)    
         params = telex_request_data.get("params", None)
-        message_id = telex_request_data.get("messageId", None)
+        
         
 
         logger.debug(f"Extracted RPC data - ID: {id}, Method: {method}, JSONRPC: {jsonrpc}")
@@ -151,6 +151,7 @@ class GetResponse(APIView):
             return self.error_response(jsonrpc, id, code, message)
         
         message = params.get("message", None)
+        messageId = message.get("messageId", None)
         if not message:
             jsonrpc = jsonrpc
             id = id
@@ -207,7 +208,7 @@ class GetResponse(APIView):
                             ai_agent_response = ai_agent.gemini_response(user_text)
                             parts_response = [
                             {
-                                "type" : first_data,
+                                "kind" : first_data,
                                 "text" : ai_agent_response,
                                 
                             }
@@ -232,7 +233,7 @@ class GetResponse(APIView):
             message = "Invalid data: the parts list is empty"
             return self.error_response(jsonrpc, id, code, message)            
 
-        kind = "message"
+        kind = "text"
         
         
         
@@ -245,7 +246,7 @@ class GetResponse(APIView):
                 "role" : "agent",
                 "parts" : parts_response,
                 "kind" : kind,
-                "message_id" : message_id
+                "message_id" : messageId
             }
         })
         
