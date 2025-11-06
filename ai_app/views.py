@@ -8,37 +8,26 @@ from rest_framework.exceptions import ParseError
 from decouple import config
 import logging
 import uuid
-
 from .ai import Ai_Agent
 
 logger = logging.getLogger("ai")
 
-# Cache BASE_URL at module level (loaded once)
-BASE_URL = config("BASE_URL", default="https://aiagentcodehelper-production.up.railway.app")
-
+BASE_URL = config("BASE_URL", default="https://aiagentcodehelper-production.up.railway.app  ")
 
 def blog(request):
-    """Render blog page"""
     return render(request, "blog.html")
 
-
 def doc(request):
-    """Render documentation page"""
     return render(request, "doc.html")
 
-
 def get_agent_info(request):
-    """
-    Agent discovery endpoint - returns agent metadata
-    GET /.well-known/agent.json
-    """
     agent_info = {
         "name": "CodeHelperAgent",
         "description": "An AI agent to help with coding questions in Python, Django, and JavaScript.",
         "url": f"{BASE_URL.rstrip('/')}/api/",
         "provider": {
             "organization": "HNG Internship",
-            "url": "https://hng.tech/"
+            "url": "https://hng.tech/  "
         },
         "version": "1.0.0",
         "documentationUrl": f"{BASE_URL}/api/docs",
@@ -86,7 +75,6 @@ def get_agent_info(request):
 
     logger.info("Serving Agent Card at /.well-known/agent.json")
     return JsonResponse(agent_info, status=200)
-#getreponse
 
 class GetResponse(APIView):
     """
@@ -97,7 +85,6 @@ class GetResponse(APIView):
     def post(self, request, *args, **kwargs):
         """Handle incoming A2A requests from Telex IM"""
         
-        # Initialize variables
         request_id = None
         jsonrpc_version = "2.0"
         
@@ -105,13 +92,11 @@ class GetResponse(APIView):
             logger.info("Receiving A2A request from Telex IM")
             data = request.data
             
-            # Extract core fields
             jsonrpc_version = data.get("jsonrpc", "2.0")
             request_id = data.get("id")
             request_method = data.get("method")
             params = data.get("params", {})
             
-            # Validate JSON-RPC version
             if jsonrpc_version != "2.0":
                 logger.warning(f"Invalid JSON-RPC version: {jsonrpc_version}")
                 return self._error_response(
@@ -119,7 +104,6 @@ class GetResponse(APIView):
                     f"Invalid Request: Unsupported JSON-RPC version '{jsonrpc_version}'"
                 )
             
-            # Route by method
             if request_method == "message/send":
                 return self._handle_message_send(request_id, params)
             else:
@@ -143,7 +127,6 @@ class GetResponse(APIView):
     def _handle_message_send(self, request_id, params):
         """Handle message/send method"""
         
-        # Validate message structure
         message = params.get("message", {})
         if not isinstance(message, dict):
             return self._error_response(
@@ -154,14 +137,12 @@ class GetResponse(APIView):
         message_id = message.get("messageId")
         parts = message.get("parts", [])
         
-        # Validate parts
         if not isinstance(parts, list) or not parts:
             return self._error_response(
                 request_id, -32600,
                 "Invalid Request: 'params.message.parts' is missing or empty"
             )
         
-        # Extract first part
         first_part = parts[0]
         if not isinstance(first_part, dict):
             return self._error_response(
@@ -169,7 +150,6 @@ class GetResponse(APIView):
                 "Invalid Request: First message part is not an object"
             )
         
-        # Check part type
         part_type = first_part.get("type") or first_part.get("kind")
         if part_type != "text":
             return self._error_response(
@@ -177,7 +157,6 @@ class GetResponse(APIView):
                 f"Invalid Request: First message part type must be 'text', got '{part_type}'"
             )
         
-        # Extract user text
         user_text = first_part.get("text", "").strip()
         if not user_text:
             return self._error_response(
@@ -187,7 +166,6 @@ class GetResponse(APIView):
         
         logger.info(f"Processing message (ID: {request_id}): '{user_text[:50]}...'")
         
-        # Process with AI
         try:
             ai_agent = Ai_Agent()
             ai_response = ai_agent.gemini_response(user_text)
@@ -198,7 +176,6 @@ class GetResponse(APIView):
                 "AI agent is unreachable at the moment"
             )
         
-        # Build response
         return self._build_success_response(
             request_id, message_id, user_text, ai_response, part_type
         )
@@ -260,7 +237,7 @@ class GetResponse(APIView):
             "jsonrpc": "2.0",
             "id": request_id,
             "result": result
-        }, status=200)
+        }, status=status.HTTP_200_OK)
     
     def _error_response(self, request_id, code, message):
         """Build JSON-RPC error response"""
@@ -274,4 +251,4 @@ class GetResponse(APIView):
                 "code": code,
                 "message": message
             }
-        }, status=200)
+        }, status=status.HTTP_200_OK)
