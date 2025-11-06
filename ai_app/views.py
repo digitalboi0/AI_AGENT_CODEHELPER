@@ -246,7 +246,7 @@ class GetResponse(APIView):
                 "role" : "agent",
                 "parts" : parts_response,
                 "kind" : kind,
-                "message_id" : messageId
+                "messageId" : messageId
             }
         })
         
