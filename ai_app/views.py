@@ -86,7 +86,7 @@ def get_agent_info(request):
 
     logger.info("Serving Agent Card at /.well-known/agent.json")
     return JsonResponse(agent_info, status=200)
-
+#getreponse
 
 class GetResponse(APIView):
     """
